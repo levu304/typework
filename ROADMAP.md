@@ -10,7 +10,7 @@ one package per service. `@levu304/excelrs` supplies xlsx **parse + typed model
 ## Universal constraints (every milestone)
 
 + **C1 memory:** process heap resident ≤512 MB, measured p95 of a `stress` smoke
-  (see each milestone's exit criteria; smoke lives at `scripts/stress.mjs`).
+  (see each milestone's exit criteria; smoke lives at `packages/viewer/__test__/perf.test.ts`).
 + **C2 embeddable:** `<iframe src=.../>` renders with **JS disabled** in the
   client. No host-side JS coupling. Output is static HTML + CSS.
 + **C3 no editor-clone:** **NOT** DocsAPI/`@onlyoffice/document-editor-react`
@@ -55,7 +55,25 @@ not empty shells.
 + M2+ get **their own change proposals** before applying (proposal → tasks → implement) to keep scope/ADR discipline.
 
 ## Current state
-+ M0 in progress: scaffold complete; change artifacts validated ✓.
-+ Next: run the excelrs probe (todo #2) — de-risks the native addon load + `wb.xlsx.read(buffer)` → typed model on this machine.
-
-```
++ M0 complete: scaffold ✓, OpenSpec change artifacts ✓, probe `PROBE_OK`
+  (engine 2.6.0, 4 ms read, 4.2 MB heap on excelrs `custom-theme.xlsx`).
++ M1 complete: `packages/viewer` HTTP service + renderer shipped and tested
+  (values/styles/merges/freeze; fail-loud 404/400/500; iframe-embeddable;
+  `<512 MB` + `<5 s` perf smoke ✓).
++ M2 (xlsx coverage) pending future: relies on excelrs v2.0 streaming reader
+  for >10k-row sheets + cached formula values.
++ `packages/react-viewer` shipped as a host-integration package — a thin React
+  `<iframe>` shim hosting `/view/:id` (no viewer backend changes). NOTE: the
+  git commit dubs this 'M2 React iframe shim', which collides with this table's
+  M2 (xlsx coverage); this shim is a host SDK, not a numbered service milestone
+  (per the growth rule), so it is documented here, not inserted as a milestone.
++ excelrs seam: `WorkbookXlsx.read` (full-model, async-contract gate in
+  `workbookFromBuffer`) is used, not the `StreamReader`/`WorkbookStreamXlsx`
+  streaming path — those yield values only (no styles/merges/freeze) and cannot
+  back the styled renderer. Full-model read still meets C1: the 10 000-row perf
+  smoke renders < 512 MB.
++ excelrs read-path gaps (known constraints, not work items): column widths are
+  not exposed on read (`ws.columns` empty on parsed XLSX) → renderer auto-fits
+  from content + default; formula cached results are not authored on write →
+  read-back cells render `=formula` text (cached-result path unit-tested via
+  `formatCellValue` only).
