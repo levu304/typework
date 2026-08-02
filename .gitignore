@@ -6,3 +6,4 @@ dist/
 package-lock.yaml
 yarn.lock
 *.tgz
+*.tsbuildinfo

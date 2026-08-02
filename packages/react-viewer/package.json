@@ -1,0 +1,23 @@
+{
+  "name": "@typework/react-viewer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Thin React iframe shim for the static-HTML typework spreadsheet viewer (no editor, no DocsAPI)",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": "^18.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.0",
+    "typescript": "^5"
+  },
+  "scripts": {
+    "build": "tsc -p .",
+    "dev": "tsx watch src/index.tsx"
+  }
+}
