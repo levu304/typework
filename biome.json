@@ -1,0 +1,14 @@
+{
+  "ignore": [
+    "node_modules",
+    "dist"
+  ],
+  "files": {
+    "includes": [
+      "**/*.ts",
+      "**/*.js",
+      "**/*.json",
+      "**/*.md"
+    ]
+  }
+}

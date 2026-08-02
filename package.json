@@ -1,0 +1,16 @@
+{
+  "name": "typework",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@11.1.2",
+  "pnpm": { "onlyBuiltDependencies": ["esbuild"] },
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "pnpm -r dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "typecheck": "pnpm -r exec tsc --noEmit"
+  }
+}
