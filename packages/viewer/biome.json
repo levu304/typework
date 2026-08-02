@@ -1,0 +1,17 @@
+{
+  "ignore": ["node_modules", "dist"],
+  "files": {
+    "includes": ["**/*.ts", "**/*.js", "**/*.json", "**/*.md"]
+  },
+  "formatter": {
+    "enabled": false
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "suspicious": {
+        "noExplicitAny": "off"
+      }
+    }
+  }
+}

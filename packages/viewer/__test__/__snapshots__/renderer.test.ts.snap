@@ -1,0 +1,37 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`golden snapshot (spec 5.2) > renders custom-theme.xlsx to a stable HTML snapshot 1`] = `
+"<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>custom-theme</title>
+<style>
+  html,body{margin:0;padding:0}
+  body{font-family:"Segoe UI",Arial,sans-serif;font-size:11pt;background:#fafafa}
+  .sheet-nav{padding:6px 10px;border-bottom:1px solid #ddd;background:#fff}
+  .sheet-viewport{overflow:auto;max-height:calc(100vh-3.5rem)}
+  .spreadsheet{border-collapse:collapse}
+  .spreadsheet td{border:1px solid #d4d4d4;padding:2px 4px;text-align:left;vertical-align:top}
+  .spreadsheet td.freeze-top{position:sticky;top:0;background:#fff}
+  .spreadsheet td.freeze-left{position:sticky;left:0;background:#f8f8f8}
+</style>
+</head>
+<body>
+<h2 style="margin:4px 10px">custom-theme</h2>
+<form class="sheet-nav" method="get" action="/view">
+  <label>Sheet: <select name="sheet" onchange="this.form.requestSubmit()"><option value="Sheet1" selected>Sheet1</option></select></label>
+  <button type="submit">Switch</button>
+</form>
+<div class="sheet-viewport">
+<table class="spreadsheet">
+  <colgroup><col style="width:84px"></colgroup>
+  <tbody>
+<tr><td style="font-size:11pt;font-family:Calibri;color:#FF0000;width:84px">Custom Theme</td></tr>
+  </tbody>
+</table>
+</div>
+</body>
+</html>"
+`;
