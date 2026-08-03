@@ -6,7 +6,7 @@ Render an XLSX spreadsheet as a read-only HTML page so it can be embedded in an
 `<iframe>` as a lightweight, sub-512MB alternative to the ONLYOFFICE editor view.
 excelrs parses the file; this service maps the parsed model to static HTML.
 
-## ADDED Requirements
+## Requirements
 
 ### Requirement: render-cell-values
 
@@ -32,6 +32,39 @@ THEN the cached result value is rendered (formulas not re-evaluated)
 
 WHEN `ws.getCell('B2').value` is a boolean or error
 THEN `true`/`false`/the error text renders (no blank)
+
+### Requirement: render-formula-cached-value
+
+A formula cell MUST render Excel's cached computed value when one is embedded in the
+XLSX, surfaced via excelrs `Cell.cachedValue` (available on `@levu304/excelrs` ≥ 2.7.0).
+The service MUST NOT recompute the formula in-memory.
+
+#### Scenario: formula cell with cached value renders the cached number
+
+WHEN `ws.getCell('B2')` is a formula cell and excelrs `cell.cachedValue` is a primitive (e.g. `15`)
+THEN the rendered `<td>` contains `15`, not `=SUM(...)`
+
+#### Scenario: formula cell with cached date renders formatted date
+
+WHEN `cell.cachedValue` is a `Date` and the cell has a `numFmt`
+THEN the rendered cell follows that `numFmt` (date formatting), not `=formula`
+
+### Requirement: render-formula-with-no-cached-value
+
+A formula cell MUST render the `=formula` text when excelrs `Cell.cachedValue` is `null`
+(no Excel-embedded cached value present).
+
+#### Scenario: excelrs-authored formula (no cache) renders formula text
+
+WHEN the XLSX was written without an embedded cached value (e.g. an excelrs-authored
+fixture sets `{ valueType:'Formula', formula:'SUM(B2:C2)' }`)
+AND `cell.cachedValue` is `null`
+THEN the rendered `<td>` contains `=SUM(B2:C2)`
+
+#### Scenario: error value not swallowed
+
+WHEN a formula evaluates (in Excel) to an Excel error and embeds it as the cached value
+THEN the rendered cell shows the Excel error text (`#DIV/0!`, `#VALUE!`, …), not `=formula`
 
 ### Requirement: render-basic-styles
 

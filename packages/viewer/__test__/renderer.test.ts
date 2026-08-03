@@ -21,10 +21,14 @@ describe('formatCellValue (spec 4.2: cell values)', () => {
   it('renders a missing error discriminant', () =>
     expect(formatCellValue(c({ type: 'Error', value: { valueType: 'Error' } }))).toBe('#VALUE!'))
   it('renders a null cell as blank', () => expect(formatCellValue(c({ value: null }))).toBe(''))
-  it('formula with cached result renders the cached value', () =>
-    expect(formatCellValue(c({ type: 'Number', value: 30, formula: 'SUM(B2:C2)' }))).toBe('30'))
+  it('formula cell renders cachedValue when present', () =>
+    expect(formatCellValue(c({ formula: 'SUM(B2:C2)', cachedValue: 30 }))).toBe('30'))
   it('formula without cached result renders the formula text', () =>
     expect(formatCellValue(c({ type: 'Null', value: null, formula: 'SUM(B2:C2)' }))).toBe('=SUM(B2:C2)'))
+  it('formula with cached date renders formatted date (numFmt)', () =>
+    expect(formatCellValue(c({ formula: 'TODAY()', cachedValue: new Date('2024-06-01T10:30:00Z') }), { numFmt: 'yyyy-mm-dd' } as any).slice(0, 10)).toBe('2024-06-01'))
+  it('formula with cached error renders Excel error text', () =>
+    expect(formatCellValue(c({ formula: '1/0', cachedValue: { valueType: 'Error', errorValue: 'Div0' } }))).toBe('#DIV/0!'))
   it('formats a number with a numFmt (thousands + decimals)', () =>
     expect(formatCellValue(c({ type: 'Number', value: 1234.5 }), { numFmt: '#,##0.00' } as any)).toBe('1,234.50'))
   it('formats a date (no numFmt) as ISO date', () =>

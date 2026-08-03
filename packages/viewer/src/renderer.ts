@@ -142,7 +142,14 @@ export interface CellLike {
   type: string
   value: unknown
   formula: string | null
+  // excelrs >=2.7 exposes Cell.cachedValue at runtime (Excel-embedded cached value
+  // for formula cells) but it is NOT in the published TS types.
+  cachedValue: unknown
 }
+
+// excelrs 2.8.0 TS types omit `cachedValue`; it exists at runtime as a getter (>=2.7).
+// Narrow the Cell we read from so the getter is type-safe here without touching excelrs's decls.
+type ExcelrsCell = Cell & { cachedValue?: unknown }
 
 // Dispatch on excelrs' value shape:
 //  - Formula cells: cached result (primitive/Date) wins; else "=formula".
@@ -151,9 +158,21 @@ export interface CellLike {
 export function formatCellValue(c: CellLike, style?: Style | null): string {
   const v = c.value
   if (c.formula) {
-    if (v != null && typeof v !== 'object') return String(v)
-    if (v instanceof Date) return formatDate(v, style?.numFmt)
-    return '=' + c.formula
+    // excelrs >=2.7: Cell.cachedValue holds Excel's embedded cached value (the `<v>`
+    // paired with `<f>`). Render it through the same formatting as a normal value;
+    // fall back to `=formula` when no cache is embedded (the read path never
+    // recomputes). See design.md D1.
+    const cv = c.cachedValue
+    if (cv == null) return '=' + c.formula
+    if (cv === true || cv === false) return cv ? 'TRUE' : 'FALSE'
+    if (typeof cv === 'number') return formatNumber(cv, style?.numFmt)
+    if (cv instanceof Date) return formatDate(cv, style?.numFmt)
+    if (typeof cv === 'string') return String(cv)
+    if (typeof cv === 'object' && 'valueType' in cv && cv.valueType === 'Error') {
+      const ev = (cv as { errorValue?: string }).errorValue
+      return ev ? ERROR_MAP[ev] || ev : '#VALUE!'
+    }
+    return String(cv) // cachedValue
   }
   if (v === null || v === undefined) return ''
   if (typeof v === 'number') return formatNumber(v, style?.numFmt)
@@ -169,8 +188,9 @@ export function formatCellValue(c: CellLike, style?: Style | null): string {
 
 // Render a cell's display text from excelrs' typed model (native Cell).
 function cellText(cell: Cell, style?: Style | null): string {
+  const c = cell as ExcelrsCell
   return formatCellValue(
-    { type: String(cell.type), value: cell.value, formula: cell.formula },
+    { type: String(cell.type), value: cell.value, formula: cell.formula, cachedValue: c.cachedValue ?? null },
     style,
   )
 }

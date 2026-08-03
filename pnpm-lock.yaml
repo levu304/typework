@@ -24,8 +24,8 @@ importers:
   packages/viewer:
     dependencies:
       '@levu304/excelrs':
-        specifier: ^2.6.0
-        version: 2.6.0
+        specifier: ^2.8.0
+        version: 2.8.0
     devDependencies:
       '@types/node':
         specifier: ^22
@@ -201,23 +201,28 @@ packages:
   '@jridgewell/sourcemap-codec@1.5.5':
     resolution: {integrity: sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==}
 
-  '@levu304/excelrs-darwin-arm64@2.6.0':
-    resolution: {integrity: sha512-SZetwe4OM0RrWUteBygr29B/5Blul682Zu64Hlz+uvOpxMIZ7J/vkm9XLCZqHOXGr5oV0edsw3YgUu1JF2vn3w==}
+  '@levu304/excelrs-darwin-arm64@2.8.0':
+    resolution: {integrity: sha512-IOWFB/tntOWw1BnOZNfyapK5c8XoFFwFSJYH3wXMZriBv6dD5U8v13rcmNbmtWJNKfuaX0QPzwn57LJtIoTdNw==}
     cpu: [arm64]
     os: [darwin]
 
-  '@levu304/excelrs-linux-x64-gnu@2.6.0':
-    resolution: {integrity: sha512-iXoiKIQuFmvO6LBneKG2+eLB77onwxX5VBdpHgYLCiSLVjZbXvsogl2Z6ATBF50rPfiQVJuclpmvBUa28eWPAA==}
+  '@levu304/excelrs-linux-arm64-gnu@2.8.0':
+    resolution: {integrity: sha512-JDIZ6ro/pQR4R0Muehu56FKPRnfnjPZGKe49prnZqal/puaMawJJWZm6kMeT7v7Z35brholv/UiR6pAuKUDLbw==}
+    cpu: [arm64]
+    os: [linux]
+
+  '@levu304/excelrs-linux-x64-gnu@2.8.0':
+    resolution: {integrity: sha512-E00k8TduoueuEe9ePzqOhsm3yFhVWY5PS3QHUxq+6kifQ2dIt4pgn9ND6UBf9ZkG9Aia1JvHduuWiqG4cGpBgg==}
     cpu: [x64]
     os: [linux]
 
-  '@levu304/excelrs-win32-x64-msvc@2.6.0':
-    resolution: {integrity: sha512-Gb5Zn2kFfXv2JuYEDLJ/E+fBLA3mH+bdg4lXXPFHiqAhuvwWftwu4RV49/1/xXOCpMIvJfO5/z3YnNkXem64kw==}
+  '@levu304/excelrs-win32-x64-msvc@2.8.0':
+    resolution: {integrity: sha512-NSge2jnO0jtvzY4bZbacpFYw8ZJSAZOPImkKxiWfdPliX3Nk1v6MtxDej+V4YUFnLwjKLA0FrL1jcg2t+f/a5Q==}
     cpu: [x64]
     os: [win32]
 
-  '@levu304/excelrs@2.6.0':
-    resolution: {integrity: sha512-Wih0+C5DaXCP7DWDKaUjlUsGMh89WP7+HRio0CAbHku1pVZBOUZMNz4td08CTQQXPhCYVro5m3522x84ghyPVA==}
+  '@levu304/excelrs@2.8.0':
+    resolution: {integrity: sha512-SDjRTHBHED4h4LMPFJzvbneWhiosgCKSnvllPgYhcDO3k67iaUJN7F50ampioJmIQKdlban6cGEGzin3lDH56g==}
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     resolution: {integrity: sha512-oTXEIha4SsuXdTA4Iyskj0kpdx2yVXdhd75c2v3xGrHFfVMsbhTPZU/nMPL4sWKo4pBHm3aucLaqGlF696dTyQ==}
@@ -734,20 +739,24 @@ snapshots:
 
   '@jridgewell/sourcemap-codec@1.5.5': {}
 
-  '@levu304/excelrs-darwin-arm64@2.6.0':
+  '@levu304/excelrs-darwin-arm64@2.8.0':
     optional: true
 
-  '@levu304/excelrs-linux-x64-gnu@2.6.0':
+  '@levu304/excelrs-linux-arm64-gnu@2.8.0':
     optional: true
 
-  '@levu304/excelrs-win32-x64-msvc@2.6.0':
+  '@levu304/excelrs-linux-x64-gnu@2.8.0':
     optional: true
 
-  '@levu304/excelrs@2.6.0':
+  '@levu304/excelrs-win32-x64-msvc@2.8.0':
+    optional: true
+
+  '@levu304/excelrs@2.8.0':
     optionalDependencies:
-      '@levu304/excelrs-darwin-arm64': 2.6.0
-      '@levu304/excelrs-linux-x64-gnu': 2.6.0
-      '@levu304/excelrs-win32-x64-msvc': 2.6.0
+      '@levu304/excelrs-darwin-arm64': 2.8.0
+      '@levu304/excelrs-linux-arm64-gnu': 2.8.0
+      '@levu304/excelrs-linux-x64-gnu': 2.8.0
+      '@levu304/excelrs-win32-x64-msvc': 2.8.0
 
   '@napi-rs/lzma-linux-x64-gnu@1.5.1':
     optional: true

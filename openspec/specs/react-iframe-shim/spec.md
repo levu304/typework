@@ -2,7 +2,7 @@
 
 Provide a React component that embeds the read-only, static-HTML spreadsheet viewer (served at `/view/:id`) into a React host, without depending on ONLYOFFICE DocsAPI editor assets or JS.
 
-## ADDED Requirements
+## Requirements
 
 ### Requirement: SpreadsheetViewer renders a single iframe
 `SpreadsheetViewer` MUST render exactly one `<iframe>` element. There MUST be no other DOM nodes, no editor JS bundle, and no DocsAPI script.
